@@ -5,49 +5,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matemática financiera</title>
     <style>
+
         body {
             font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
         }
+
         .parent_block
         {
             display: flex;
             align-items: center;
+        }
+
+        .child_block
+        {
+            margin-left: 10px;
+        }
+
+        #equation
+        {
+            padding-left: 50px;
+        }
+
+        .title
+        {
+            margin-left: 10px;
         }
         input {
             font-weight: bold;
             font-size: larger;
         }
     </style>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
-    <h2>Cálculos de valor del dinero en el tiempo</h2>
+
+<h2 class="title">Cálculos de valor del dinero en el tiempo</h2>
 
 <div class="parent_block">
     <div class="child_block">
         <form action="/">
-            <label for="Cv">Coeficiente de válvula Cv:</label><br>
-            <input type="number" id="Cv" name="Cv" value="0"><br>
-            <label for="Caudal">Caudal (gpm):</label><br>
-            <input type="number" id="Caudal" name="Caudal" value="0"><br>
-            <label for="SG">Specific Gravity (1 for water):</label><br>
-            <input type="number" id="SG" name="SG" value="1"><br>
-            <label for="SG">Caida de presión (psi):</label><br>
-            <input type="number" id="deltaP" name="delta_p" value="0"><br><br>
+            <label for="VP">Valor Presente (VP):</label><br>
+            <input type="number" id="VP" name="VP" value="0"><br>
+            <label for="VF">Valor Futuro (VF):</label><br>
+            <input type="number" id="VF" name="VF" value="0"><br>
+            <label for="i">Tasa de interes (i) %:</label><br>
+            <input type="number" id="i" name="i" value="0"><br>
+            <label for="periods">Periodos (n):</label><br>
+            <input type="number" id="periods" name="periods" value="0"><br><br>
             <button type="button" onclick=calcular()>Calcular</button>
         </form>
     </div>
-    <div class="child_block">
-        <img src="cv.png" alt="">
+    <div id="equation" class="child_block">
+        <p>$$VF = VP(1+i)^n$$</p>
     </div>
 </div>
 </body>
 <script>
     function calcular () {
-        Q = document.getElementById("Caudal").value;
-        SG = document.getElementById("SG").value;
-        Cv = document.getElementById("Cv").value;
-        let del_p = Math.pow((parseFloat(Q)/parseFloat(Cv)), 2)*SG;
-        document.getElementById("deltaP").value  = del_p.toFixed(3);
+        var VP = document.getElementById("VP").value;
+        var i = document.getElementById("i").value;
+        var n = document.getElementById("periods").value;
+        var VF = Math.pow((1 + parseFloat(i)/1200), n)*VP;
+        document.getElementById("VF").value  = VF.toFixed(2);
     }
 </script>
 </html>
