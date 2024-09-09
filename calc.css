@@ -1,0 +1,25 @@
+body {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.parent_block {
+    display: flex;
+    align-items: center;
+}
+
+.child_block {
+    margin-left: 10px;
+}
+
+#equation {
+    padding-left: 50px;
+}
+
+.title {
+    margin-left: 10px;
+}
+
+input {
+    font-weight: bold;
+    font-size: larger;
+}
