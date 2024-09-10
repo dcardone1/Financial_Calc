@@ -17,6 +17,15 @@ function valorPresente() {
 }
 
 function showFormula() {
-    document.getElementById("equation_paragraph").innerHTML="$$VF = VP(1+i)^n$$";
+    var r  = document.getElementById("VP_r");
+    if (r.checked) {
+        document.getElementById("equation_paragraph").innerHTML = "$$VP = VF\over \(1+i)^n$$";
+        MathJax.typeset();
+    }
+    r = document.getElementById("VF_r");
+    if (r.checked) {
+        document.getElementById("equation_paragraph").innerHTML = "$$VF = VP(1+i)^n$$";
+        MathJax.typeset();
+    }
 }
 
