@@ -23,19 +23,19 @@
             <input type="radio" id="VF_r" name="options" onchange="showFormula()"><br>
             <label for="i">Tasa de interes (i) %:</label><br>
             <input type="number" id="i" name="i" value="0">
-            <input type="radio" id="i_r" name="options"><br>
+            <input type="radio" id="i_r" name="options" onchange="showFormula()"><br>
             <label for="anualidad">Seleccionar si es anualidad: </label>
-            <input type="checkbox" id="anualidad" name="anualidad"><br>
+            <input type="checkbox" id="anualidad" name="anualidad" onchange="showFormula()"><br>
             <label for="R">Pago/Cuota (R):</label><br>
             <input type="number" id="R" name="R" value="0">
-            <input type="radio" id="R_r" name="options"><br>
+            <input type="radio" id="R_r" name="options" onchange="showFormula()"><br>
             <label for="anualidad_ordinaria">Ordinaria</label>
-            <input type="radio" id="anualidad_ordinaria" name="anualidades">
+            <input type="radio" id="anualidad_ordinaria" name="anualidades" onchange="showFormula()">
             <label for="anualidad_ordinaria">Anticipada</label>
-            <input type="radio" id="anualidad_anticipada" name="anualidades"><br>
+            <input type="radio" id="anualidad_anticipada" name="anualidades" onchange="showFormula()"><br>
             <label for="periods">Periodos (n):</label><br>
             <input type="number" id="periods" name="periods" value="0">
-            <input type="radio" id="number_r" name="options"><br><br>
+            <input type="radio" id="n_r" name="options" onchange="showFormula()"><br><br>
             <button type="button" onclick=calcular()>Calcular</button>
         </form>
     </div>
