@@ -2,6 +2,7 @@ function init(){
     document.getElementById("R_r").disabled = true;
     document.getElementById("VF_r").checked = true;
     document.getElementById("anualidad_ordinaria").checked = true;
+    document.getElementById("con_VP").checked = true;
 
     showFormula()
 
@@ -63,24 +64,102 @@ function showFormula() {
             "$$VF = R\\Big[{\\sum_{t=1}^n {(1+i)^{n-t}}}\\Big] = R\\Big[{{(1+i)^n-1}\\over\ i}\\Big]$$";
             MathJax.typeset();
         }
-        r = document.getElementById("i_r");
-        if (r.checked) {
-            document.getElementById("equation_paragraph").innerHTML = "$$i$$";
-            MathJax.typeset();
+        if(document.getElementById("con_VP").checked){
+            r = document.getElementById("i_r");
+            if (r.checked) {
+                document.getElementById("equation_paragraph").innerHTML =
+                "i calculada numéricamente desde: $$VP = R\\Big[{1-{1\\over\ {(1+i)^n}}\\over\ i}\\Big]$$";
+                MathJax.typeset();
+            }
+            r = document.getElementById("n_r");
+            if (r.checked) {
+                document.getElementById("equation_paragraph").innerHTML = 
+                "$$n={{ln({{R}\\over\ {R - VPi}})}\\over\ {ln(1+i)}}$$";
+                MathJax.typeset();
+            }
+            r = document.getElementById("R_r");
+            if (r.checked) {
+                document.getElementById("equation_paragraph").innerHTML =
+                 "$$R = {{VPi}\\over\ {\\Big[{1-{1\\over\ {(1+i)^n}}}\\Big]}}$$";
+                MathJax.typeset();
+            }
         }
-        r = document.getElementById("n_r");
-        if (r.checked) {
-            document.getElementById("equation_paragraph").innerHTML = "$$n$$";
-            MathJax.typeset();
+        else {
+            r = document.getElementById("i_r");
+            if (r.checked) {
+                document.getElementById("equation_paragraph").innerHTML = "i calculada numéricamente desde:\
+                $$VF = R\\Big[{{(1+i)^n-1}\\over\ i}\\Big]$$";
+                MathJax.typeset();
+            }
+            r = document.getElementById("n_r");
+            if (r.checked) {
+                document.getElementById("equation_paragraph").innerHTML = 
+                "$$n={{ln \\Big[{{VFi + R}\\over\ R}\\Big]}\\over\ {ln(1+i)}}$$";
+                MathJax.typeset();
+            }
+            r = document.getElementById("R_r");
+            if (r.checked) {
+                document.getElementById("equation_paragraph").innerHTML = 
+                "$$R = {VFi\\over\ {\\Big[{(1+i)^n-1}\\Big]}}$$";
+                MathJax.typeset();
+            }
         }
-        r = document.getElementById("R_r");
-        if (r.checked) {
-            document.getElementById("equation_paragraph").innerHTML = "$$R$$";
-            MathJax.typeset();
-        }
+        
     }
     else {
-
+        document.getElementById("R_r").disabled = false
+        var r = document.getElementById("VP_r");
+        if (r.checked) {
+            document.getElementById("equation_paragraph").innerHTML =
+                "$$VP = R\\Big[{\\sum_{t=1}^n {1\\over\ {(1+i)^{t-1}}}}\\Big] = R(1+i)\\Big[{1-{1\\over\ {(1+i)^n}}\\over\ i}\\Big]$$";
+            MathJax.typeset();
+        }
+        r = document.getElementById("VF_r");
+        if (r.checked) {
+            document.getElementById("equation_paragraph").innerHTML =
+                "$$VF = R\\Big[{\\sum_{t=1}^n {(1+i)^{n+1-t}}}\\Big] = R(1+i)\\Big[{{(1+i)^n-1}\\over\ i}\\Big]$$";
+            MathJax.typeset();
+        }
+        if (document.getElementById("con_VP").checked) {
+            r = document.getElementById("i_r");
+            if (r.checked) {
+                document.getElementById("equation_paragraph").innerHTML = "i Calculada numéricamente desde:\
+                $$R(1+i)\\Big[{1-{1\\over\ {(1+i)^n}}\\over\ i}\\Big]$$";
+                MathJax.typeset();
+            }
+            r = document.getElementById("n_r");
+            if (r.checked) {
+                document.getElementById("equation_paragraph").innerHTML = 
+                "$$n={{ln \\Big[{{R(1+i)}\\over\ {R(1+i)-VPi}} \\Big]}\\over\ {ln(1+i)}}$$";
+                MathJax.typeset();
+            }
+            r = document.getElementById("R_r");
+            if (r.checked) {
+                document.getElementById("equation_paragraph").innerHTML = 
+                "$$R={VP\\over\ {(1+i)\\Big[{1-{1\\over\ {(1+i)^n}}\\over\ i}\\Big]}}$$";
+                MathJax.typeset();
+            }
+        }
+        else {
+            r = document.getElementById("i_r");
+            if (r.checked) {
+                document.getElementById("equation_paragraph").innerHTML = "i calculada numéricamente desde:\
+                $$VF={R(1+i)\\Big[{{(1+i)^n-1}\\over\ i}\\Big]}$$";
+                MathJax.typeset();
+            }
+            r = document.getElementById("n_r");
+            if (r.checked) {
+                document.getElementById("equation_paragraph").innerHTML = 
+                "$$n={{ln\\Big[{{VFi + R(1+i)}\\over\ {R(1+i)}}\\Big]}\\over\ {ln(1+i)}}$$";
+                MathJax.typeset();
+            }
+            r = document.getElementById("R_r");
+            if (r.checked) {
+                document.getElementById("equation_paragraph").innerHTML = 
+                "$$R={VF \\over\ {(1+i)\\Big[{{(1+i)^n-1}\\over\ i}\\Big]}}$$";
+                MathJax.typeset();
+            }
+        }
     }
 }
 

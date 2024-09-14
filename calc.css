@@ -23,3 +23,40 @@ input {
     font-weight: bold;
     font-size: larger;
 }
+
+.container_anualidad{
+    margin-top: 10px;
+    border: gray solid 1px;
+    padding: 4px;
+}
+
+.container_options{
+    margin-top: 10px;
+}
+
+.exe_button
+{
+        cursor: pointer;
+        border: 0px solid rgb(187, 204, 0);
+        font-size: 19px;
+        text-align: center;
+        color: rgb(255, 255, 255);
+        padding: 12px;
+        transition: 294ms;
+        width: 135px;
+        box-shadow: rgb(0, 0, 0) 0px 0px 0px 0px;
+        border-radius: 10px;
+        background: rgb(27, 65, 102);
+        --hover-width: 150px;
+        --hover-borderSize: 0px;
+        --hover-bgc: #3193f5;
+}
+
+.exe_button:hover {
+        color: rgb(255, 255, 255);
+        width: 150px;
+        background: rgb(49, 147, 245) none repeat scroll 0% 0% / auto padding-box border-box;
+        border-color: rgb(204, 0, 105);
+        border-width: 0px;
+        border-style: solid;
+}

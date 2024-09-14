@@ -18,25 +18,47 @@
             <label for="VP">Valor Presente (VP):</label><br>
             <input type="number" id="VP" name="VP" value="0">
             <input type="radio" id="VP_r" name="options" onchange="showFormula()"><br>
+            
             <label for="VF">Valor Futuro (VF):</label><br>
             <input type="number" id="VF" name="VF" value="0">
             <input type="radio" id="VF_r" name="options" onchange="showFormula()"><br>
+            
             <label for="i">Tasa de interes (i) %:</label><br>
             <input type="number" id="i" name="i" value="0">
             <input type="radio" id="i_r" name="options" onchange="showFormula()"><br>
-            <label for="anualidad">Seleccionar si es anualidad: </label>
-            <input type="checkbox" id="anualidad" name="anualidad" onchange="showFormula()"><br>
-            <label for="R">Pago/Cuota (R):</label><br>
-            <input type="number" id="R" name="R" value="0">
-            <input type="radio" id="R_r" name="options" onchange="showFormula()"><br>
-            <label for="anualidad_ordinaria">Ordinaria</label>
-            <input type="radio" id="anualidad_ordinaria" name="anualidades" onchange="showFormula()">
-            <label for="anualidad_ordinaria">Anticipada</label>
-            <input type="radio" id="anualidad_anticipada" name="anualidades" onchange="showFormula()"><br>
+            
+            <div class="container_anualidad">
+                <label for="anualidad">Seleccionar si es anualidad: </label>
+                <input type="checkbox" id="anualidad" name="anualidad" onchange="showFormula()"><br>
+
+                <div class="container_options">
+                    <label for="anualidad_ordinaria">Ordinaria</label>
+                    <input type="radio" id="anualidad_ordinaria" name="anualidades" onchange="showFormula()">
+                    <label for="anualidad_anticipada">Anticipada</label>
+                    <input type="radio" id="anualidad_anticipada" name="anualidades" onchange="showFormula()"><br>
+                </div>
+                
+                <div class="container_options">
+                    <label for="con_VP">Utilizando VP</label>
+                    <input type="radio" id="con_VP" name="calc_opt" onchange="showFormula()">
+                    <label for="con_VF">Utilizando VF</label>
+                    <input type="radio" id="con_VF" name="calc_opt" onchange="showFormula()"><br>
+                </div>
+                
+                <div class="container_options">
+                    <label for="R">Pago/Cuota (R):</label><br>
+                    <input type="number" id="R" name="R" value="0">
+                    <input type="radio" id="R_r" name="options" onchange="showFormula()"><br>
+                </div>
+                
+            </div>
+            
+            
             <label for="periods">Periodos (n):</label><br>
             <input type="number" id="periods" name="periods" value="0">
             <input type="radio" id="n_r" name="options" onchange="showFormula()"><br><br>
-            <button type="button" onclick=calcular()>Calcular</button>
+            
+            <button class="exe_button" type="button" onclick=calcular()>CALCULAR</button>
         </form>
     </div>
     <div id="equation" class="child_block">
