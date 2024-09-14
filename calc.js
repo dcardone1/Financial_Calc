@@ -1,9 +1,23 @@
+function calcular (){
+
+    var VP = document.getElementById("VP").value;
+    var VF = document.getElementById("VF").value;
+    var i = document.getElementById("i").value;
+    var n = document.getElementById("periods").value;
+    var R = document.getElementById("R").value;
+
+    document.getElementById(result_id).value = formula(VP, VF, i, n, R)
+}
+
 function init(){
     document.getElementById("R_r").disabled = true;
     document.getElementById("VF_r").checked = true;
     document.getElementById("anualidad_ordinaria").checked = true;
     document.getElementById("con_VP").checked = true;
-
+    var formula = function () {
+        return 0;
+    }
+    var result_id = "VP";
     showFormula()
 
 }
@@ -33,6 +47,10 @@ function showFormula() {
         if (r.checked) {
             document.getElementById("equation_paragraph").innerHTML = "$$VP ={ VF\\over\(1 + i)^n}$$";
             MathJax.typeset();
+            result_id="VP"
+            formula = function (VP, VF, i, n, R) {
+                return VF / Math.pow(1 + parseFloat(i), n);
+            }
         }
         r = document.getElementById("VF_r");
         if (r.checked) {
