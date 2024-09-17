@@ -22,22 +22,6 @@ function init(){
 
 }
 
-function valorFinal() {
-    var VP = document.getElementById("VP").value;
-    var i = document.getElementById("i").value;
-    var n = document.getElementById("periods").value;
-    var VF = Math.pow((1 + parseFloat(i) / 1200), n) * VP;
-    document.getElementById("VF").value = VF.toFixed(2);
-}
-
-function valorPresente() {
-    var VF = document.getElementById("VF").value;
-    var i = document.getElementById("i").value;
-    var n = document.getElementById("periods").value;
-    var VP = VF / Math.pow((1 + parseFloat(i) / 1200), n);
-    document.getElementById("VF").value = VF.toFixed(2);
-}
-
 //show the corresponding formula according to the selected calculation
 function showFormula() {
     var checkBoxAnualidad = document.getElementById("anualidad")
@@ -49,23 +33,35 @@ function showFormula() {
             MathJax.typeset();
             result_id="VP"
             formula = function (VP, VF, i, n, R) {
-                return VF / Math.pow(1 + parseFloat(i), n);
+                return (VF / Math.pow(1 + parseFloat(i), n)).toFixed(2);
             }
         }
         r = document.getElementById("VF_r");
         if (r.checked) {
             document.getElementById("equation_paragraph").innerHTML = "$$VF = VP(1+i)^n$$";
             MathJax.typeset();
+            result_id = "VF"
+            formula = function (VP, VF, i, n, R) {
+                return (VP*Math.pow(1 + parseFloat(i), n)).toFixed(2);
+            }
         }
         r = document.getElementById("i_r");
         if (r.checked) {
             document.getElementById("equation_paragraph").innerHTML = "$$i = \\sqrt[n]{VF\\over\ VP}-1$$";
             MathJax.typeset();
+            result_id = "i"
+            formula = function (VP, VF, i, n, R) {
+                return (Math.pow(parseFloat(VF)/parseFloat(VP), 1.0/n)-1).toFixed(6);
+            }
         }
         r = document.getElementById("n_r");
         if (r.checked) {
             document.getElementById("equation_paragraph").innerHTML = "$$n = {ln({VF\\over\ VP})\\over\{ln(1+i)}}$$";
             MathJax.typeset();
+            result_id = "periods"
+            formula = function (VP, VF, i, n, R) {
+                return (Math.log(parseFloat(VF)/parseFloat(VP))/Math.log(1+parseFloat(i))).toFixed(2);
+            }
         }
     }
     else if (document.getElementById("anualidad_ordinaria").checked){
