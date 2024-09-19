@@ -61,7 +61,7 @@ function showFormula() {
             MathJax.typeset();
             result_id = "periods";
             formula = function (VP, VF, i, n, R) {
-                return Math.round(Math.log(VF/VP)/Math.log(1+i), 2);
+                return (Math.log(VF/VP)/Math.log(1+i)).toFixed(2);
             }
         }
     }
@@ -101,7 +101,7 @@ function showFormula() {
                 MathJax.typeset();
                 result_id = "periods";
                 formula = function (VP, VF, i, n, R) {
-                    return Math.round((Math.log(R/(R-VP*i))/Math.log(1+i)), 2);
+                    return ((Math.log(R/(R-VP*i))/Math.log(1+i))).toFixed(2);
                 }
             }
             r = document.getElementById("R_r");
@@ -129,7 +129,7 @@ function showFormula() {
                 MathJax.typeset();
                 result_id = "periods";
                 formula = function (VP, VF, i, n, R) {
-                    return Math.round((Math.log((VF*i+R)/R)/Math.log(1+i)), 2);
+                    return ((Math.log((VF*i+R)/R)/Math.log(1+i))).toFixed(2);
                 }
             }
             r = document.getElementById("R_r");
@@ -181,7 +181,7 @@ function showFormula() {
                 MathJax.typeset();
                 result_id = "periods";
                 formula = function (VP, VF, i, n, R) {
-                    return Math.round((Math.log(R*(1+i) / (R*(1+i) - VP * i)) / Math.log(1 + i)), 2);
+                    return ((Math.log(R*(1+i) / (R*(1+i) - VP * i)) / Math.log(1 + i))).toFixed(2);
                 }
             }
             r = document.getElementById("R_r");
@@ -209,7 +209,7 @@ function showFormula() {
                 MathJax.typeset();
                 result_id = "periods";
                 formula = function (VP, VF, i, n, R) {
-                    return Math.round((Math.log((VF*i+R*(1+i))/(R*(1+i))) / Math.log(1 + i)), 2);
+                    return ((Math.log((VF*i+R*(1+i))/(R*(1+i))) / Math.log(1 + i))).toFixed(2);
                 }
             }
             r = document.getElementById("R_r");
