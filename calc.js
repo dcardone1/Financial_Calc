@@ -23,6 +23,19 @@ function init(){
 
 }
 
+function newtonMethod(x0, n){
+    
+
+}
+
+function setBackColor(id){
+    var L = document.getElementsByTagName("input");
+    for (const i of L){
+        i.style.backgroundColor = "";
+    }
+    document.getElementById(id).style.backgroundColor = "#3193f5";
+}
+
 //show the corresponding formula according to the selected calculation
 function showFormula() {
     var checkBoxAnualidad = document.getElementById("anualidad")
@@ -224,6 +237,7 @@ function showFormula() {
             }
         }
     }
+    setBackColor(result_id);
 }
 
 window.addEventListener("load", init);
