@@ -23,8 +23,16 @@ function init(){
 
 }
 
-function newtonMethod(x0, n){
-    
+function newtonMethod(VP, VF, i, n, R, iterations, formulaAux){
+
+    var h = 0.000001;
+    for (var iter=0; iter<iterations; iter++){
+        i = i - h / (formulaAux(VP, VF, i + h, n, R) / formulaAux(VP, VF, i, n, R)-1.0);
+        if (Math.abs(formulaAux(VP, VF, i, n, R))<0.01){
+            return i.toFixed(8);
+        }
+    }
+    return 0;
 
 }
 
@@ -106,6 +114,14 @@ function showFormula() {
                 document.getElementById("equation_paragraph").innerHTML =
                 "i calculada numéricamente desde: $$VP = R\\Big[{1-{1\\over\ {(1+i)^n}}\\over\ i}\\Big]$$";
                 MathJax.typeset();
+                result_id = "i";
+                formula = function (VP, VF, i, n, R) {
+                    f = function (VP, VF, i, n, R) {
+                        return VP - R * (1-1/Math.pow(1 + i, n)) / i;
+                    }
+                    var interest = newtonMethod(VP, VF, 0.00001, n, R, 100, f);
+                    return interest;
+                }
             }
             r = document.getElementById("n_r");
             if (r.checked) {
@@ -134,6 +150,14 @@ function showFormula() {
                 document.getElementById("equation_paragraph").innerHTML = "i calculada numéricamente desde:\
                 $$VF = R\\Big[{{(1+i)^n-1}\\over\ i}\\Big]$$";
                 MathJax.typeset();
+                result_id="i";
+                formula = function (VP, VF, i, n, R) {
+                    f = function (VP, VF, i, n, R) {
+                        return VF-R*(Math.pow(1+i, n)-1)/i;
+                    }
+                    var interest = newtonMethod(VP, VF, 0.00001, n, R, 100, f);
+                    return interest;
+                }
             }
             r = document.getElementById("n_r");
             if (r.checked) {
@@ -184,8 +208,16 @@ function showFormula() {
             r = document.getElementById("i_r");
             if (r.checked) {
                 document.getElementById("equation_paragraph").innerHTML = "i Calculada numéricamente desde:\
-                $$R(1+i)\\Big[{1-{1\\over\ {(1+i)^n}}\\over\ i}\\Big]$$";
+                $$VP = R(1+i)\\Big[{1-{1\\over\ {(1+i)^n}}\\over\ i}\\Big]$$";
                 MathJax.typeset();
+                result_id = "i";
+                formula = function (VP, VF, i, n, R) {
+                    f = function (VP, VF, i, n, R) {
+                        return VP - R*(1+i) * (1 - 1 / Math.pow(1 + i, n)) / i;
+                    }
+                    var interest = newtonMethod(VP, VF, 0.00001, n, R, 100, f);
+                    return interest;
+                }
             }
             r = document.getElementById("n_r");
             if (r.checked) {
@@ -214,6 +246,14 @@ function showFormula() {
                 document.getElementById("equation_paragraph").innerHTML = "i calculada numéricamente desde:\
                 $$VF={R(1+i)\\Big[{{(1+i)^n-1}\\over\ i}\\Big]}$$";
                 MathJax.typeset();
+                result_id = "i";
+                formula = function (VP, VF, i, n, R) {
+                    f = function (VP, VF, i, n, R) {
+                        return VF - R * (1 + i) * (Math.pow(1 + i, n) - 1) / i;
+                    }
+                    var interest = newtonMethod(VP, VF, 0.00001, n, R, 100, f);
+                    return interest;
+                }
             }
             r = document.getElementById("n_r");
             if (r.checked) {
