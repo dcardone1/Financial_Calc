@@ -1,3 +1,5 @@
+var result_id;
+
 function calcular (){
 
     var VP = parseFloat(document.getElementById("VP").value);
@@ -18,7 +20,7 @@ function init(){
     var formula = function () {
         return 0;
     }
-    var result_id = "VP";
+    result_id = "VP";
     showFormula()
 
 }
