@@ -1,5 +1,17 @@
 var result_id;
 
+function i_12 (){
+    var i = parseFloat(document.getElementById("i").value);
+    i = i / 12
+    document.getElementById("i").value = i
+}
+
+function i_100 (){
+    var i = parseFloat(document.getElementById("i").value);
+    i = i / 100
+    document.getElementById("i").value = i
+}
+
 function calcular (){
 
     var VP = parseFloat(document.getElementById("VP").value);
