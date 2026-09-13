@@ -11,30 +11,42 @@
 <body>
 
 <h2 class="title">Cálculos de valor del dinero en el tiempo</h2>
+<p class="intro">
+    Esta calculadora relaciona un monto de dinero hoy (<strong>Valor Presente</strong>) con ese mismo
+    monto en el futuro (<strong>Valor Futuro</strong>), afectado por una tasa de interés a lo largo
+    de varios períodos. Elegí qué variable querés calcular tocando el círculo a su lado,
+    completá los demás campos y presioná <strong>CALCULAR</strong>.
+</p>
 
 <div class="parent_block">
     <div class="child_block">
         <form action="/">
             <label for="VP">Valor Presente (VP):</label><br>
+            <p class="hint">Cuánto vale ese dinero hoy, en el momento inicial.</p>
             <input type="number" id="VP" name="VP" value="0">
             <input type="radio" id="VP_r" name="options" onchange="showFormula()"><br>
             
             <label for="VF">Valor Futuro (VF):</label><br>
+            <p class="hint">Cuánto va a valer ese mismo dinero después de "n" períodos de capitalización.</p>
             <input type="number" id="VF" name="VF" value="0">
             <input type="radio" id="VF_r" name="options" onchange="showFormula()"><br>
             
             <label for="i">Tasa de interes (i):</label><br>
+            <p class="hint">Tasa de interés por período (ej: 0.02 = 2% mensual). Usá los botones i/12 o i/100 si tenés la tasa en otro formato.</p>
             <input type="number" id="i" name="i" value="0">
             <input type="radio" id="i_r" name="options" onchange="showFormula()"><br>
             
             <div class="container_anualidad">
                 <label for="anualidad">Seleccionar si es anualidad: </label>
+                <p class="hint">Activá esta opción si en lugar de un pago único hay una serie de pagos iguales y periódicos (una cuota, un alquiler, un plazo fijo con renta, etc.).</p>
                 <input type="checkbox" id="anualidad" name="anualidad" onchange="showFormula()"><br>
 
                 <div class="container_options">
                     <label for="anualidad_ordinaria">Ordinaria</label>
+                    <p class="hint">Los pagos se hacen al final de cada período (lo más común: sueldos, cuotas de préstamos).</p>
                     <input type="radio" id="anualidad_ordinaria" name="anualidades" onchange="showFormula()">
                     <label for="anualidad_anticipada">Anticipada</label>
+                    <p class="hint">Los pagos se hacen al inicio de cada período (ej: alquileres, seguros).</p>
                     <input type="radio" id="anualidad_anticipada" name="anualidades" onchange="showFormula()"><br>
                 </div>
                 
@@ -47,6 +59,7 @@
                 
                 <div class="container_options">
                     <label for="R">Pago/Cuota (R):</label><br>
+                    <p class="hint">Monto de cada pago o cuota periódica.</p>
                     <input type="number" id="R" name="R" value="0">
                     <input type="radio" id="R_r" name="options" onchange="showFormula()"><br>
                 </div>
@@ -55,17 +68,31 @@
             
             
             <label for="periods">Periodos (n):</label><br>
+            <p class="hint">Cantidad de períodos de capitalización o de pagos (ej: meses, años).</p>
             <input type="number" id="periods" name="periods" value="0">
             <input type="radio" id="n_r" name="options" onchange="showFormula()"><br><br>
             
             <button class="exe_button" type="button" onclick=calcular()>CALCULAR</button>
-            <button class="exe_button" type="button" onclick=i_12()>i/12</button>
-            <button class="exe_button" type="button" onclick=i_100()>i/100</button>
+            <button class="exe_button" type="button" onclick=i_12() title="Convierte una tasa anual en tasa mensual (la divide por 12)">i/12</button>
+            <button class="exe_button" type="button" onclick=i_100() title="Convierte un porcentaje en decimal (ej: 5 → 0.05)">i/100</button>
+            <button class="exe_button" type="button" onclick="mostrarAmortizacion()" id="amort_button" style="display:none;">Ver amortización</button>
         </form>
     </div>
     <div id="equation" class="child_block">
         <p id="equation_paragraph">Seleccione el valor a calcular</p>
+        <p id="description_paragraph" class="description"></p>
     </div>
+</div>
+<div id="amortizacion_container" class="child_block" style="display:none;">
+    <h3>Tabla de amortización</h3>
+    <p class="hint">Detalle de cada cuota: cuánto se paga de interés y cuánto reduce la deuda.
+    En una anualidad anticipada, el primer pago se descuenta directamente del capital porque se realiza antes de que corra interés.</p>
+    <table id="amortizacion_tabla">
+        <thead>
+            <tr><th>Período</th><th>Cuota</th><th>Interés</th><th>Amortización</th><th>Saldo</th></tr>
+        </thead>
+        <tbody id="amortizacion_body"></tbody>
+    </table>
 </div>
 </body>
 </html>

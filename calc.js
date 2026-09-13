@@ -63,9 +63,13 @@ function showFormula() {
     var checkBoxAnualidad = document.getElementById("anualidad")
     if (!checkBoxAnualidad.checked){
         document.getElementById("R_r").disabled = true
+        document.getElementById("amort_button").style.display = "none";
+        document.getElementById("amortizacion_container").style.display = "none";
         var r  = document.getElementById("VP_r");
         if (r.checked) {
             document.getElementById("equation_paragraph").innerHTML = "$$VP ={ VF\\over\(1 + i)^n}$$";
+            document.getElementById("description_paragraph").innerHTML = 
+            "Se descuenta (trae a valor presente) el Valor Futuro a la tasa de interés i durante n períodos, para saber cuánto vale hoy un monto que se cobrará en el futuro.";
             MathJax.typeset();
             result_id="VP"
             formula = function (VP, VF, i, n, R) {
@@ -75,6 +79,8 @@ function showFormula() {
         r = document.getElementById("VF_r");
         if (r.checked) {
             document.getElementById("equation_paragraph").innerHTML = "$$VF = VP(1+i)^n$$";
+            document.getElementById("description_paragraph").innerHTML = 
+            "Se capitaliza el Valor Presente a la tasa de interés i durante n períodos, para saber en cuánto se convierte si se deja crecer con interés compuesto.";
             MathJax.typeset();
             result_id = "VF";
             formula = function (VP, VF, i, n, R) {
@@ -84,6 +90,8 @@ function showFormula() {
         r = document.getElementById("i_r");
         if (r.checked) {
             document.getElementById("equation_paragraph").innerHTML = "$$i = \\sqrt[n]{VF\\over\ VP}-1$$";
+            document.getElementById("description_paragraph").innerHTML = 
+            "Se calcula la tasa de interés por período necesaria para que el Valor Presente se convierta en el Valor Futuro en n períodos.";
             MathJax.typeset();
             result_id = "i";
             formula = function (VP, VF, i, n, R) {
@@ -93,6 +101,8 @@ function showFormula() {
         r = document.getElementById("n_r");
         if (r.checked) {
             document.getElementById("equation_paragraph").innerHTML = "$$n = {ln({VF\\over\ VP})\\over\{ln(1+i)}}$$";
+            document.getElementById("description_paragraph").innerHTML =
+            "Se calcula la cantidad de períodos necesarios para que, a la tasa i, el Valor Presente se convierta en el Valor Futuro.";
             MathJax.typeset();
             result_id = "periods";
             formula = function (VP, VF, i, n, R) {
@@ -102,10 +112,18 @@ function showFormula() {
     }
     else if (document.getElementById("anualidad_ordinaria").checked){
         document.getElementById("R_r").disabled = false
+        if (document.getElementById("con_VP").checked) {
+            document.getElementById("amort_button").style.display = "inline-block";
+        } else {
+            document.getElementById("amort_button").style.display = "none";
+            document.getElementById("amortizacion_container").style.display = "none";
+        }
         var r = document.getElementById("VP_r");
         if (r.checked) {
             document.getElementById("equation_paragraph").innerHTML = 
             "$$VP = R\\Big[{\\sum_{t=1}^n {1\\over\ {(1+i)^t}}}\\Big] = R\\Big[{1-{1\\over\ {(1+i)^n}}\\over\ i}\\Big]$$";
+            document.getElementById("description_paragraph").innerHTML = 
+            "Se calcula el Valor Presente de una serie de n pagos iguales (R), realizados al final de cada período, descontados a la tasa i.";
             MathJax.typeset();
             result_id = "VP";
             formula = function (VP, VF, i, n, R) {
@@ -116,6 +134,8 @@ function showFormula() {
         if (r.checked) {
             document.getElementById("equation_paragraph").innerHTML = 
             "$$VF = R\\Big[{\\sum_{t=1}^n {(1+i)^{n-t}}}\\Big] = R\\Big[{{(1+i)^n-1}\\over\ i}\\Big]$$";
+            document.getElementById("description_paragraph").innerHTML = 
+            "Se calcula el Valor Futuro de una serie de n pagos iguales (R), realizados al final de cada período, capitalizados a la tasa i.";
             MathJax.typeset();
             result_id = "VF";
             formula = function (VP, VF, i, n, R) {
@@ -127,6 +147,8 @@ function showFormula() {
             if (r.checked) {
                 document.getElementById("equation_paragraph").innerHTML =
                 "i calculada numéricamente desde: $$VP = R\\Big[{1-{1\\over\ {(1+i)^n}}\\over\ i}\\Big]$$";
+                document.getElementById("description_paragraph").innerHTML = 
+                "Se calcula, de forma numérica (método de Newton), la tasa de interés i que hace que n pagos iguales (R) al final de cada período equivalgan al Valor Presente.";
                 MathJax.typeset();
                 result_id = "i";
                 formula = function (VP, VF, i, n, R) {
@@ -141,6 +163,8 @@ function showFormula() {
             if (r.checked) {
                 document.getElementById("equation_paragraph").innerHTML = 
                 "$$n={{ln({{R}\\over\ {R - VPi}})}\\over\ {ln(1+i)}}$$";
+                document.getElementById("description_paragraph").innerHTML = 
+                "Se calcula la cantidad de pagos (n) necesarios, al final de cada período, para amortizar el Valor Presente a la tasa i con cuotas de valor R.";
                 MathJax.typeset();
                 result_id = "periods";
                 formula = function (VP, VF, i, n, R) {
@@ -151,6 +175,8 @@ function showFormula() {
             if (r.checked) {
                 document.getElementById("equation_paragraph").innerHTML =
                  "$$R = {{VPi}\\over\ {\\Big[{1-{1\\over\ {(1+i)^n}}}\\Big]}}$$";
+                 document.getElementById("description_paragraph").innerHTML = 
+                 "Se calcula el valor de la cuota (R) que, pagada al final de cada uno de los n períodos, equivale al Valor Presente a la tasa i.";
                 MathJax.typeset();
                 result_id = "R";
                 formula = function (VP, VF, i, n, R) {
@@ -163,6 +189,8 @@ function showFormula() {
             if (r.checked) {
                 document.getElementById("equation_paragraph").innerHTML = "i calculada numéricamente desde:\
                 $$VF = R\\Big[{{(1+i)^n-1}\\over\ i}\\Big]$$";
+                document.getElementById("description_paragraph").innerHTML = 
+                "Se calcula, de forma numérica (método de Newton), la tasa de interés i que hace que n pagos iguales (R) al final de cada período acumulen el Valor Futuro.";
                 MathJax.typeset();
                 result_id="i";
                 formula = function (VP, VF, i, n, R) {
@@ -177,6 +205,8 @@ function showFormula() {
             if (r.checked) {
                 document.getElementById("equation_paragraph").innerHTML = 
                 "$$n={{ln \\Big[{{VFi + R}\\over\ R}\\Big]}\\over\ {ln(1+i)}}$$";
+                document.getElementById("description_paragraph").innerHTML = 
+                "Se calcula la cantidad de pagos (n) necesarios, al final de cada período, para acumular el Valor Futuro ahorrando una cuota R a la tasa i.";
                 MathJax.typeset();
                 result_id = "periods";
                 formula = function (VP, VF, i, n, R) {
@@ -187,6 +217,8 @@ function showFormula() {
             if (r.checked) {
                 document.getElementById("equation_paragraph").innerHTML = 
                 "$$R = {VFi\\over\ {\\Big[{(1+i)^n-1}\\Big]}}$$";
+                document.getElementById("description_paragraph").innerHTML = 
+                "Se calcula el valor de la cuota (R) que, depositada al final de cada uno de los n períodos, acumula el Valor Futuro a la tasa i.";
                 MathJax.typeset();
                 result_id = "R";
                 formula = function (VP, VF, i, n, R) {
@@ -198,10 +230,18 @@ function showFormula() {
     }
     else {
         document.getElementById("R_r").disabled = false
+        if (document.getElementById("con_VP").checked) {
+            document.getElementById("amort_button").style.display = "inline-block";
+        } else {
+            document.getElementById("amort_button").style.display = "none";
+            document.getElementById("amortizacion_container").style.display = "none";
+        }
         var r = document.getElementById("VP_r");
         if (r.checked) {
             document.getElementById("equation_paragraph").innerHTML =
                 "$$VP = R\\Big[{\\sum_{t=1}^n {1\\over\ {(1+i)^{t-1}}}}\\Big] = R(1+i)\\Big[{1-{1\\over\ {(1+i)^n}}\\over\ i}\\Big]$$";
+            document.getElementById("description_paragraph").innerHTML = 
+            "Se calcula el Valor Presente de una serie de n pagos iguales (R), realizados al inicio de cada período, descontados a la tasa i.";
             MathJax.typeset();
             result_id = "VP";
             formula = function (VP, VF, i, n, R) {
@@ -212,6 +252,8 @@ function showFormula() {
         if (r.checked) {
             document.getElementById("equation_paragraph").innerHTML =
                 "$$VF = R\\Big[{\\sum_{t=1}^n {(1+i)^{n+1-t}}}\\Big] = R(1+i)\\Big[{{(1+i)^n-1}\\over\ i}\\Big]$$";
+            document.getElementById("description_paragraph").innerHTML = 
+            "Se calcula el Valor Futuro de una serie de n pagos iguales (R), realizados al inicio de cada período, capitalizados a la tasa i.";
             MathJax.typeset();
             result_id = "VF";
             formula = function (VP, VF, i, n, R) {
@@ -223,6 +265,8 @@ function showFormula() {
             if (r.checked) {
                 document.getElementById("equation_paragraph").innerHTML = "i Calculada numéricamente desde:\
                 $$VP = R(1+i)\\Big[{1-{1\\over\ {(1+i)^n}}\\over\ i}\\Big]$$";
+                document.getElementById("description_paragraph").innerHTML = 
+                "Se calcula, de forma numérica (método de Newton), la tasa de interés i que hace que n pagos iguales (R) al inicio de cada período equivalgan al Valor Presente.";
                 MathJax.typeset();
                 result_id = "i";
                 formula = function (VP, VF, i, n, R) {
@@ -237,6 +281,8 @@ function showFormula() {
             if (r.checked) {
                 document.getElementById("equation_paragraph").innerHTML = 
                 "$$n={{ln \\Big[{{R(1+i)}\\over\ {R(1+i)-VPi}} \\Big]}\\over\ {ln(1+i)}}$$";
+                document.getElementById("description_paragraph").innerHTML = 
+                "Se calcula la cantidad de pagos (n) necesarios, al inicio de cada período, para amortizar el Valor Presente a la tasa i con cuotas de valor R.";
                 MathJax.typeset();
                 result_id = "periods";
                 formula = function (VP, VF, i, n, R) {
@@ -247,6 +293,8 @@ function showFormula() {
             if (r.checked) {
                 document.getElementById("equation_paragraph").innerHTML = 
                 "$$R={VP\\over\ {(1+i)\\Big[{1-{1\\over\ {(1+i)^n}}\\over\ i}\\Big]}}$$";
+                document.getElementById("description_paragraph").innerHTML = 
+                "Se calcula el valor de la cuota (R) que, pagada al inicio de cada uno de los n períodos, equivale al Valor Presente a la tasa i.";
                 MathJax.typeset();
                 result_id = "R";
                 formula = function (VP, VF, i, n, R) {
@@ -259,6 +307,8 @@ function showFormula() {
             if (r.checked) {
                 document.getElementById("equation_paragraph").innerHTML = "i calculada numéricamente desde:\
                 $$VF={R(1+i)\\Big[{{(1+i)^n-1}\\over\ i}\\Big]}$$";
+                document.getElementById("description_paragraph").innerHTML = 
+                "Se calcula, de forma numérica (método de Newton), la tasa de interés i que hace que n pagos iguales (R) al inicio de cada período acumulen el Valor Futuro.";
                 MathJax.typeset();
                 result_id = "i";
                 formula = function (VP, VF, i, n, R) {
@@ -273,6 +323,8 @@ function showFormula() {
             if (r.checked) {
                 document.getElementById("equation_paragraph").innerHTML = 
                 "$$n={{ln\\Big[{{VFi + R(1+i)}\\over\ {R(1+i)}}\\Big]}\\over\ {ln(1+i)}}$$";
+                document.getElementById("description_paragraph").innerHTML = 
+                "Se calcula la cantidad de pagos (n) necesarios, al inicio de cada período, para acumular el Valor Futuro ahorrando una cuota R a la tasa i.";
                 MathJax.typeset();
                 result_id = "periods";
                 formula = function (VP, VF, i, n, R) {
@@ -283,6 +335,8 @@ function showFormula() {
             if (r.checked) {
                 document.getElementById("equation_paragraph").innerHTML = 
                 "$$R={VF \\over\ {(1+i)\\Big[{{(1+i)^n-1}\\over\ i}\\Big]}}$$";
+                document.getElementById("description_paragraph").innerHTML = 
+                "Se calcula el valor de la cuota (R) que, depositada al inicio de cada uno de los n períodos, acumula el Valor Futuro a la tasa i.";
                 MathJax.typeset();
                 result_id = "R";
                 formula = function (VP, VF, i, n, R) {
@@ -292,6 +346,44 @@ function showFormula() {
         }
     }
     setBackColor(result_id);
+}
+
+function mostrarAmortizacion(){
+    var VP = parseFloat(document.getElementById("VP").value);
+    var i = parseFloat(document.getElementById("i").value);
+    var n = parseFloat(document.getElementById("periods").value);
+    var R = parseFloat(document.getElementById("R").value);
+    var esAnticipada = document.getElementById("anualidad_anticipada").checked;
+
+    var body = document.getElementById("amortizacion_body");
+    body.innerHTML = "";
+    var saldo = VP;
+
+    for (var t = 1; t <= n; t++){
+        var interes, amortizacion;
+
+        if (esAnticipada && t === 1){
+            // El primer pago se hace de inmediato, antes de que corra interés
+            interes = 0;
+            amortizacion = R;
+        } else {
+            interes = saldo * i;
+            amortizacion = R - interes;
+        }
+
+        saldo = saldo - amortizacion;
+
+        var fila = document.createElement("tr");
+        fila.innerHTML =
+            "<td>" + t + "</td>" +
+            "<td>" + R.toFixed(2) + "</td>" +
+            "<td>" + interes.toFixed(2) + "</td>" +
+            "<td>" + amortizacion.toFixed(2) + "</td>" +
+            "<td>" + Math.max(saldo, 0).toFixed(2) + "</td>";
+        body.appendChild(fila);
+    }
+
+    document.getElementById("amortizacion_container").style.display = "block";
 }
 
 window.addEventListener("load", init);
