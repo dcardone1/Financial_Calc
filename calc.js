@@ -1,5 +1,41 @@
 var result_id;
 
+var moneyFormatter = new Intl.NumberFormat('es-AR', {
+    style: 'currency',
+    currency: 'ARS',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+});
+
+function formatCurrency(value) {
+    if (isNaN(value)) return moneyFormatter.format(0);
+    return moneyFormatter.format(value);
+}
+
+// Convierte "$ 1.200,50" -> 1200.50
+function parseCurrency(value) {
+    if (typeof value !== "string") return parseFloat(value);
+    var cleaned = value
+        .replace(/\$/g, "")
+        .replace(/\s/g, "")
+        .replace(/\./g, "")
+        .replace(",", ".");
+    return parseFloat(cleaned);
+}
+
+// Muestra el número "pelado" al hacer foco (para editar cómodo) y lo formatea al salir
+function attachCurrencyFormatting(id) {
+    var el = document.getElementById(id);
+    el.addEventListener("focus", function () {
+        var raw = parseCurrency(el.value);
+        el.value = isNaN(raw) ? "" : raw;
+    });
+    el.addEventListener("blur", function () {
+        var raw = parseCurrency(el.value);
+        el.value = formatCurrency(isNaN(raw) ? 0 : raw);
+    });
+}
+
 function i_12 (){
     var i = parseFloat(document.getElementById("i").value);
     i = i / 12
@@ -14,27 +50,56 @@ function i_100 (){
 
 function calcular (){
 
-    var VP = parseFloat(document.getElementById("VP").value);
-    var VF = parseFloat(document.getElementById("VF").value);
+    var VP = parseCurrency(document.getElementById("VP").value);
+    var VF = parseCurrency(document.getElementById("VF").value);
     var i = parseFloat(document.getElementById("i").value);
     var n = parseFloat(document.getElementById("periods").value);
-    var R = parseFloat(document.getElementById("R").value);
+    var R = parseCurrency(document.getElementById("R").value);
 
-    document.getElementById(result_id).value = formula(VP, VF, i, n, R);
+    var resultado = formula(VP, VF, i, n, R);
+
+    if (result_id === "VP" || result_id === "VF" || result_id === "R") {
+        document.getElementById(result_id).value = formatCurrency(parseFloat(resultado));
+    } else {
+        document.getElementById(result_id).value = resultado;
+    }
+}
+
+function resetForm(){
+    document.getElementById("VF_r").checked = true;
+    document.getElementById("VP_r").checked = false;
+    document.getElementById("i_r").checked = false;
+    document.getElementById("n_r").checked = false;
+    document.getElementById("R_r").checked = false;
+    document.getElementById("R_r").disabled = true;
+
+    document.getElementById("anualidad").checked = false;
+    document.getElementById("anualidad_ordinaria").checked = true;
+    document.getElementById("anualidad_anticipada").checked = false;
+    document.getElementById("con_VP").checked = true;
+    document.getElementById("con_VF").checked = false;
+
+    document.getElementById("i").value = 0.01;
+    document.getElementById("periods").value = 0;
+    document.getElementById("VP").value = formatCurrency(0);
+    document.getElementById("VF").value = formatCurrency(0);
+    document.getElementById("R").value = formatCurrency(0);
+
+    var L = document.getElementsByTagName("input");
+    for (const inp of L){
+        inp.style.backgroundColor = "";
+    }
+
+    document.getElementById("amort_button").style.display = "none";
+    document.getElementById("amortizacion_container").style.display = "none";
+    document.getElementById("amortizacion_body").innerHTML = "";
+
+    showFormula();
 }
 
 function init(){
-    document.getElementById("R_r").disabled = true;
-    document.getElementById("VF_r").checked = true;
-    document.getElementById("anualidad_ordinaria").checked = true;
-    document.getElementById("con_VP").checked = true;
-    document.getElementById("i").value=0.01;
-    var formula = function () {
-        return 0;
-    }
-    result_id = "VP";
-    showFormula()
-
+    ["VP", "VF", "R"].forEach(attachCurrencyFormatting);
+    resetForm();
 }
 
 function newtonMethod(VP, VF, i, n, R, iterations, formulaAux){
@@ -146,7 +211,7 @@ function showFormula() {
             r = document.getElementById("i_r");
             if (r.checked) {
                 document.getElementById("equation_paragraph").innerHTML =
-                "i calculada numéricamente desde: $$VP = R\\Big[{1-{1\\over\ {(1+i)^n}}\\over\ i}\\Big]$$";
+                "$$VP = R\\Big[{1-{1\\over\ {(1+i)^n}}\\over\ i}\\Big]$$";
                 document.getElementById("description_paragraph").innerHTML = 
                 "Se calcula, de forma numérica (método de Newton), la tasa de interés i que hace que n pagos iguales (R) al final de cada período equivalgan al Valor Presente.";
                 MathJax.typeset();
@@ -349,10 +414,10 @@ function showFormula() {
 }
 
 function mostrarAmortizacion(){
-    var VP = parseFloat(document.getElementById("VP").value);
+    var VP = parseCurrency(document.getElementById("VP").value);
     var i = parseFloat(document.getElementById("i").value);
     var n = parseFloat(document.getElementById("periods").value);
-    var R = parseFloat(document.getElementById("R").value);
+    var R = parseCurrency(document.getElementById("R").value);
     var esAnticipada = document.getElementById("anualidad_anticipada").checked;
 
     var body = document.getElementById("amortizacion_body");
@@ -363,7 +428,6 @@ function mostrarAmortizacion(){
         var interes, amortizacion;
 
         if (esAnticipada && t === 1){
-            // El primer pago se hace de inmediato, antes de que corra interés
             interes = 0;
             amortizacion = R;
         } else {
@@ -376,10 +440,10 @@ function mostrarAmortizacion(){
         var fila = document.createElement("tr");
         fila.innerHTML =
             "<td>" + t + "</td>" +
-            "<td>" + R.toFixed(2) + "</td>" +
-            "<td>" + interes.toFixed(2) + "</td>" +
-            "<td>" + amortizacion.toFixed(2) + "</td>" +
-            "<td>" + Math.max(saldo, 0).toFixed(2) + "</td>";
+            "<td>" + formatCurrency(R) + "</td>" +
+            "<td>" + formatCurrency(interes) + "</td>" +
+            "<td>" + formatCurrency(amortizacion) + "</td>" +
+            "<td>" + formatCurrency(Math.max(saldo, 0)) + "</td>";
         body.appendChild(fila);
     }
 

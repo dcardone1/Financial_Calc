@@ -94,6 +94,13 @@ input[type="number"] {
     width: 140px;
 }
 
+input[type="text"] {
+    background: var(--input-bg);
+    border: 1px solid var(--rule);
+    padding: 6px 10px;
+    width: 140px;
+}
+
 input[type="radio"],
 input[type="checkbox"] {
     accent-color: var(--accent);

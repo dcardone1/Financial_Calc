@@ -27,14 +27,14 @@
             <section class="group">
                 <label for="VP">Valor Presente (VP)</label>
                 <p class="hint">Cuánto vale ese dinero hoy, en el momento inicial.</p>
-                <input type="number" id="VP" name="VP" value="0">
+                <input type="text" inputmode="decimal" id="VP" name="VP" value="0">
                 <input type="radio" id="VP_r" name="options" onchange="showFormula()">
             </section>
 
             <section class="group">
                 <label for="VF">Valor Futuro (VF)</label>
                 <p class="hint">Cuánto va a valer ese mismo dinero después de "n" períodos de capitalización.</p>
-                <input type="number" id="VF" name="VF" value="0">
+                <input type="text" inputmode="decimal" id="VF" name="VF" value="0">
                 <input type="radio" id="VF_r" name="options" onchange="showFormula()">
             </section>
 
@@ -70,7 +70,7 @@
                     <div class="container_options">
                         <label for="R">Pago/Cuota (R)</label>
                         <p class="hint">Monto de cada pago o cuota periódica.</p>
-                        <input type="number" id="R" name="R" value="0">
+                        <input type="text" inputmode="decimal" id="R" name="R" value="0">
                         <input type="radio" id="R_r" name="options" onchange="showFormula()">
                     </div>
                 </div>
@@ -87,6 +87,7 @@
                 <button class="exe_button" type="button" onclick=calcular()>Calcular</button>
                 <button class="exe_button ghost" type="button" onclick=i_12() title="Convierte una tasa anual en tasa mensual (la divide por 12)">i / 12</button>
                 <button class="exe_button ghost" type="button" onclick=i_100() title="Convierte un porcentaje en decimal (ej: 5 → 0.05)">i / 100</button>
+                <button class="exe_button ghost" type="button" onclick="resetForm()">Limpiar</button>
             </section>
             <button class="exe_button" type="button" onclick="mostrarAmortizacion()" id="amort_button" style="display:none;">Ver amortización</button>
         </form>
