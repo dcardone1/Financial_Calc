@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matemática financiera</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="calc.css">
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="calc.js"></script>
@@ -15,66 +17,77 @@
     Esta calculadora relaciona un monto de dinero hoy (<strong>Valor Presente</strong>) con ese mismo
     monto en el futuro (<strong>Valor Futuro</strong>), afectado por una tasa de interés a lo largo
     de varios períodos. Elegí qué variable querés calcular tocando el círculo a su lado,
-    completá los demás campos y presioná <strong>CALCULAR</strong>.
+    completá los demás campos y presioná <strong>Calcular</strong>.
 </p>
 
 <div class="parent_block">
     <div class="child_block">
         <form action="/">
-            <label for="VP">Valor Presente (VP):</label><br>
-            <p class="hint">Cuánto vale ese dinero hoy, en el momento inicial.</p>
-            <input type="number" id="VP" name="VP" value="0">
-            <input type="radio" id="VP_r" name="options" onchange="showFormula()"><br>
-            
-            <label for="VF">Valor Futuro (VF):</label><br>
-            <p class="hint">Cuánto va a valer ese mismo dinero después de "n" períodos de capitalización.</p>
-            <input type="number" id="VF" name="VF" value="0">
-            <input type="radio" id="VF_r" name="options" onchange="showFormula()"><br>
-            
-            <label for="i">Tasa de interes (i):</label><br>
-            <p class="hint">Tasa de interés por período (ej: 0.02 = 2% mensual). Usá los botones i/12 o i/100 si tenés la tasa en otro formato.</p>
-            <input type="number" id="i" name="i" value="0">
-            <input type="radio" id="i_r" name="options" onchange="showFormula()"><br>
-            
-            <div class="container_anualidad">
-                <label for="anualidad">Seleccionar si es anualidad: </label>
-                <p class="hint">Activá esta opción si en lugar de un pago único hay una serie de pagos iguales y periódicos (una cuota, un alquiler, un plazo fijo con renta, etc.).</p>
-                <input type="checkbox" id="anualidad" name="anualidad" onchange="showFormula()"><br>
 
-                <div class="container_options">
-                    <label for="anualidad_ordinaria">Ordinaria</label>
-                    <p class="hint">Los pagos se hacen al final de cada período (lo más común: sueldos, cuotas de préstamos).</p>
-                    <input type="radio" id="anualidad_ordinaria" name="anualidades" onchange="showFormula()">
-                    <label for="anualidad_anticipada">Anticipada</label>
-                    <p class="hint">Los pagos se hacen al inicio de cada período (ej: alquileres, seguros).</p>
-                    <input type="radio" id="anualidad_anticipada" name="anualidades" onchange="showFormula()"><br>
+            <section class="group">
+                <label for="VP">Valor Presente (VP)</label>
+                <p class="hint">Cuánto vale ese dinero hoy, en el momento inicial.</p>
+                <input type="number" id="VP" name="VP" value="0">
+                <input type="radio" id="VP_r" name="options" onchange="showFormula()">
+            </section>
+
+            <section class="group">
+                <label for="VF">Valor Futuro (VF)</label>
+                <p class="hint">Cuánto va a valer ese mismo dinero después de "n" períodos de capitalización.</p>
+                <input type="number" id="VF" name="VF" value="0">
+                <input type="radio" id="VF_r" name="options" onchange="showFormula()">
+            </section>
+
+            <section class="group">
+                <label for="i">Tasa de interés (i)</label>
+                <p class="hint">Tasa de interés por período (ej: 0.02 = 2% mensual). Usá los botones i/12 o i/100 si tenés la tasa en otro formato.</p>
+                <input type="number" id="i" name="i" value="0">
+                <input type="radio" id="i_r" name="options" onchange="showFormula()">
+            </section>
+
+            <section class="group">
+                <div class="container_anualidad">
+                    <label for="anualidad">Seleccionar si es anualidad</label>
+                    <p class="hint">Activá esta opción si en lugar de un pago único hay una serie de pagos iguales y periódicos (una cuota, un alquiler, un plazo fijo con renta, etc.).</p>
+                    <input type="checkbox" id="anualidad" name="anualidad" onchange="showFormula()">
+
+                    <div class="container_options">
+                        <label for="anualidad_ordinaria">Ordinaria</label>
+                        <p class="hint">Los pagos se hacen al final de cada período (lo más común: sueldos, cuotas de préstamos).</p>
+                        <input type="radio" id="anualidad_ordinaria" name="anualidades" onchange="showFormula()">
+                        <label for="anualidad_anticipada">Anticipada</label>
+                        <p class="hint">Los pagos se hacen al inicio de cada período (ej: alquileres, seguros).</p>
+                        <input type="radio" id="anualidad_anticipada" name="anualidades" onchange="showFormula()">
+                    </div>
+
+                    <div class="container_options">
+                        <label for="con_VP">Utilizando VP</label>
+                        <input type="radio" id="con_VP" name="calc_opt" onchange="showFormula()">
+                        <label for="con_VF">Utilizando VF</label>
+                        <input type="radio" id="con_VF" name="calc_opt" onchange="showFormula()">
+                    </div>
+
+                    <div class="container_options">
+                        <label for="R">Pago/Cuota (R)</label>
+                        <p class="hint">Monto de cada pago o cuota periódica.</p>
+                        <input type="number" id="R" name="R" value="0">
+                        <input type="radio" id="R_r" name="options" onchange="showFormula()">
+                    </div>
                 </div>
-                
-                <div class="container_options">
-                    <label for="con_VP">Utilizando VP</label>
-                    <input type="radio" id="con_VP" name="calc_opt" onchange="showFormula()">
-                    <label for="con_VF">Utilizando VF</label>
-                    <input type="radio" id="con_VF" name="calc_opt" onchange="showFormula()"><br>
-                </div>
-                
-                <div class="container_options">
-                    <label for="R">Pago/Cuota (R):</label><br>
-                    <p class="hint">Monto de cada pago o cuota periódica.</p>
-                    <input type="number" id="R" name="R" value="0">
-                    <input type="radio" id="R_r" name="options" onchange="showFormula()"><br>
-                </div>
-                
-            </div>
-            
-            
-            <label for="periods">Periodos (n):</label><br>
-            <p class="hint">Cantidad de períodos de capitalización o de pagos (ej: meses, años).</p>
-            <input type="number" id="periods" name="periods" value="0">
-            <input type="radio" id="n_r" name="options" onchange="showFormula()"><br><br>
-            
-            <button class="exe_button" type="button" onclick=calcular()>CALCULAR</button>
-            <button class="exe_button" type="button" onclick=i_12() title="Convierte una tasa anual en tasa mensual (la divide por 12)">i/12</button>
-            <button class="exe_button" type="button" onclick=i_100() title="Convierte un porcentaje en decimal (ej: 5 → 0.05)">i/100</button>
+            </section>
+
+            <section class="group">
+                <label for="periods">Períodos (n)</label>
+                <p class="hint">Cantidad de períodos de capitalización o de pagos (ej: meses, años).</p>
+                <input type="number" id="periods" name="periods" value="0">
+                <input type="radio" id="n_r" name="options" onchange="showFormula()">
+            </section>
+
+            <section class="group buttons">
+                <button class="exe_button" type="button" onclick=calcular()>Calcular</button>
+                <button class="exe_button ghost" type="button" onclick=i_12() title="Convierte una tasa anual en tasa mensual (la divide por 12)">i / 12</button>
+                <button class="exe_button ghost" type="button" onclick=i_100() title="Convierte un porcentaje en decimal (ej: 5 → 0.05)">i / 100</button>
+            </section>
             <button class="exe_button" type="button" onclick="mostrarAmortizacion()" id="amort_button" style="display:none;">Ver amortización</button>
         </form>
     </div>
